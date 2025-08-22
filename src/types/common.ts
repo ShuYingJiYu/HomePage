@@ -18,20 +18,22 @@ export const ProjectCategory = {
   OPEN_SOURCE_TOOL: 'open-source',
   LIBRARY_FRAMEWORK: 'library',
   AUTOMATION_SCRIPT: 'automation',
-  OTHER: 'other'
+  OTHER: 'other',
 } as const
 
-export type ProjectCategory = typeof ProjectCategory[keyof typeof ProjectCategory]
+export type ProjectCategory =
+  (typeof ProjectCategory)[keyof typeof ProjectCategory]
 
 export const ServiceCategory = {
   FRONTEND: 'frontend',
   BACKEND: 'backend',
   MOBILE: 'mobile',
   DEVOPS: 'devops',
-  CONSULTING: 'consulting'
+  CONSULTING: 'consulting',
 } as const
 
-export type ServiceCategory = typeof ServiceCategory[keyof typeof ServiceCategory]
+export type ServiceCategory =
+  (typeof ServiceCategory)[keyof typeof ServiceCategory]
 
 export interface DateRange {
   start: Date

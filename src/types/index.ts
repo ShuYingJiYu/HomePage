@@ -7,7 +7,7 @@ export * from './ai'
 export * from './seo'
 
 // Config types (with renamed exports to avoid conflicts)
-export type { 
+export type {
   SiteConfig,
   GitHubConfig,
   WordPressConfig,
@@ -20,7 +20,7 @@ export type {
   ProjectCategory,
   ErrorRecoveryStrategy,
   CacheStrategy as ConfigCacheStrategy,
-  SocialPlatform as ConfigSocialPlatform
+  SocialPlatform as ConfigSocialPlatform,
 } from './config'
 
 // Social types (with renamed exports to avoid conflicts)
@@ -63,7 +63,7 @@ export type {
   PostResult,
   CrossPostContent,
   CrossPostResult,
-  SocialDateRange
+  SocialDateRange,
 } from './social'
 
 // Performance types (with renamed exports to avoid conflicts)
@@ -105,5 +105,5 @@ export type {
   ExperimentVariant,
   PerformanceConfig,
   ExperimentResults,
-  VariantMetrics
+  VariantMetrics,
 } from './performance'

@@ -22,10 +22,10 @@ export interface PerformanceReport {
 }
 
 export interface CoreWebVitals {
-  lcp: number  // Largest Contentful Paint (ms)
-  fid: number  // First Input Delay (ms)
-  cls: number  // Cumulative Layout Shift
-  fcp: number  // First Contentful Paint (ms)
+  lcp: number // Largest Contentful Paint (ms)
+  fid: number // First Input Delay (ms)
+  cls: number // Cumulative Layout Shift
+  fcp: number // First Contentful Paint (ms)
   ttfb: number // Time to First Byte (ms)
   inp?: number // Interaction to Next Paint (ms)
   scores: {
@@ -111,7 +111,12 @@ export interface NavigationPattern {
 }
 
 export interface PerformanceRecommendation {
-  category: 'loading' | 'interactivity' | 'visual-stability' | 'accessibility' | 'seo'
+  category:
+    | 'loading'
+    | 'interactivity'
+    | 'visual-stability'
+    | 'accessibility'
+    | 'seo'
   title: string
   description: string
   impact: 'high' | 'medium' | 'low'
@@ -122,7 +127,14 @@ export interface PerformanceRecommendation {
   resources?: string[]
 }
 
-export type ConnectionType = 'slow-2g' | '2g' | '3g' | '4g' | '5g' | 'wifi' | 'ethernet'
+export type ConnectionType =
+  | 'slow-2g'
+  | '2g'
+  | '3g'
+  | '4g'
+  | '5g'
+  | 'wifi'
+  | 'ethernet'
 
 // Image Optimization
 export interface ImageOptimizer {
@@ -211,7 +223,11 @@ export interface UnusedCodeEntry {
 }
 
 export interface BundleRecommendation {
-  type: 'code-splitting' | 'tree-shaking' | 'dependency-optimization' | 'compression'
+  type:
+    | 'code-splitting'
+    | 'tree-shaking'
+    | 'dependency-optimization'
+    | 'compression'
   description: string
   potentialSavings: number
   implementation: string
@@ -228,8 +244,8 @@ export interface CacheStrategy {
 
 export interface BrowserCacheConfig {
   staticAssets: string // e.g., '1 year'
-  dataFiles: string   // e.g., '1 hour'
-  htmlFiles: string   // e.g., '5 minutes'
+  dataFiles: string // e.g., '1 hour'
+  htmlFiles: string // e.g., '5 minutes'
   apiResponses: string // e.g., '10 minutes'
 }
 
@@ -242,11 +258,11 @@ export interface CDNCacheConfig {
 }
 
 export interface ApplicationCacheConfig {
-  githubData: string    // e.g., '6 hours'
-  blogPosts: string     // e.g., '1 hour'
-  aiAnalysis: string    // e.g., '24 hours'
-  images: string        // e.g., '7 days'
-  maxSize: number       // in MB
+  githubData: string // e.g., '6 hours'
+  blogPosts: string // e.g., '1 hour'
+  aiAnalysis: string // e.g., '24 hours'
+  images: string // e.g., '7 days'
+  maxSize: number // in MB
   strategy: 'lru' | 'lfu' | 'ttl'
 }
 

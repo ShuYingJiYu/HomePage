@@ -196,7 +196,14 @@ export interface BlogPostingStructuredData extends StructuredData {
 export interface SitemapEntry {
   url: string
   lastmod?: string
-  changefreq?: 'always' | 'hourly' | 'daily' | 'weekly' | 'monthly' | 'yearly' | 'never'
+  changefreq?:
+    | 'always'
+    | 'hourly'
+    | 'daily'
+    | 'weekly'
+    | 'monthly'
+    | 'yearly'
+    | 'never'
   priority?: number
   alternates?: SitemapAlternate[]
   images?: SitemapImage[]

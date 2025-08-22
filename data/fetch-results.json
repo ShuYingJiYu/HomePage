@@ -1,0 +1,14 @@
+{
+  "github": {
+    "success": false,
+    "error": "GitHub data fetching not yet implemented"
+  },
+  "wordpress": {
+    "success": false,
+    "error": "WordPress data fetching not yet implemented"
+  },
+  "status": {
+    "success": false,
+    "error": "Status monitoring data fetching not yet implemented"
+  }
+}

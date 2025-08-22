@@ -33,6 +33,7 @@
       "@/config/*": ["./config/*"]
     }
   },
-  "include": ["src", "config", "scripts"],
+  "include": ["src", "config"],
+  "exclude": ["scripts", "dist", "node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

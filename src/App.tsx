@@ -1,5 +1,3 @@
-
-
 function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 to-secondary-50">
@@ -16,9 +14,7 @@ function App() {
             <p className="text-gray-600 mb-6">
               React + TypeScript + Vite + Tailwind CSS 基础架构已搭建完成
             </p>
-            <button className="btn-primary w-full">
-              开始开发
-            </button>
+            <button className="btn-primary w-full">开始开发</button>
           </div>
         </div>
       </div>

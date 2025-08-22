@@ -1,0 +1,33 @@
+{
+  "home": {
+    "title": "书樱寄语网络工作室 - 专业的网络开发服务",
+    "description": "书樱寄语网络工作室提供专业的Web应用开发、移动应用开发和技术咨询服务。我们专注于现代化技术栈和用户体验优化。",
+    "keywords": [
+      "网络开发",
+      "Web开发",
+      "移动应用",
+      "React",
+      "TypeScript",
+      "技术咨询"
+    ],
+    "ogTitle": "书樱寄语网络工作室 - Shuying Studio",
+    "ogDescription": "专业的网络开发工作室，提供现代化的Web应用开发和技术咨询服务",
+    "ogImage": "https://shuyingapp.cn/og-image.png",
+    "canonicalUrl": "https://shuyingapp.cn"
+  },
+  "projects": {
+    "title": "项目作品集 - 书樱寄语网络工作室",
+    "description": "查看我们的项目作品集，包括Web应用、移动应用和开源项目。展示我们的技术实力和创新能力。",
+    "keywords": [
+      "项目作品集",
+      "开源项目",
+      "Web应用",
+      "移动应用",
+      "GitHub"
+    ],
+    "ogTitle": "项目作品集 - Shuying Studio",
+    "ogDescription": "查看我们的技术项目和开源贡献",
+    "ogImage": "https://shuyingapp.cn/og-projects.png",
+    "canonicalUrl": "https://shuyingapp.cn/projects"
+  }
+}

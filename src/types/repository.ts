@@ -1,4 +1,8 @@
-import { ProjectCategory, MultilingualContent, MultilingualArray } from './common'
+import {
+  ProjectCategory,
+  MultilingualContent,
+  MultilingualArray,
+} from './common'
 
 // GitHub Repository related types
 export interface Repository {

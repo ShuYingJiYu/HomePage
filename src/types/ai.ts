@@ -1,10 +1,18 @@
-import { ProjectCategory, MultilingualContent, MultilingualArray, Language } from './common'
+import {
+  ProjectCategory,
+  MultilingualContent,
+  MultilingualArray,
+  Language,
+} from './common'
 import { Repository, DisplayProject } from './repository'
 
 // AI Analysis related types
 export interface AIAnalyzer {
   analyzeRepository(repo: Repository): Promise<RepositoryAnalysis>
-  generateProjectDescription(repo: Repository, language: Language): Promise<string>
+  generateProjectDescription(
+    repo: Repository,
+    language: Language
+  ): Promise<string>
   categorizeProjects(repos: Repository[]): Promise<ProjectCategory[]>
   evaluateProjectValue(repo: Repository): Promise<ProjectScore>
   generateMultilingualContent(repo: Repository): Promise<MultilingualContent>
@@ -61,8 +69,15 @@ export interface ContentGenerator {
   generateDescription(repo: Repository, language: Language): Promise<string>
   generateHighlights(repo: Repository, language: Language): Promise<string[]>
   generateSEOContent(repo: Repository, language: Language): Promise<SEOContent>
-  generateSocialContent(repo: Repository, language: Language): Promise<SocialContent>
-  translateContent(content: string, fromLang: Language, toLang: Language): Promise<string>
+  generateSocialContent(
+    repo: Repository,
+    language: Language
+  ): Promise<SocialContent>
+  translateContent(
+    content: string,
+    fromLang: Language,
+    toLang: Language
+  ): Promise<string>
 }
 
 export interface SEOContent {
@@ -118,7 +133,12 @@ export interface AIResponse<T> {
 export interface AIError {
   code: string
   message: string
-  type: 'rate_limit' | 'quota_exceeded' | 'invalid_request' | 'server_error' | 'network_error'
+  type:
+    | 'rate_limit'
+    | 'quota_exceeded'
+    | 'invalid_request'
+    | 'server_error'
+    | 'network_error'
   retryAfter?: number
   details?: Record<string, unknown>
 }

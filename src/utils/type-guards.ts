@@ -11,7 +11,7 @@ import type {
   MultilingualArray,
   ConfigSocialPlatform,
   ErrorInfo,
-  CacheMetadata
+  CacheMetadata,
 } from '@/types'
 
 // Language type guards
@@ -23,13 +23,16 @@ export const isLanguage = (value: unknown): value is Language => {
 export const isProjectCategory = (value: unknown): value is ProjectCategory => {
   const validCategories = [
     'web-app',
-    'mobile-app', 
+    'mobile-app',
     'open-source',
     'library',
     'automation',
-    'other'
+    'other',
   ] as const
-  return typeof value === 'string' && (validCategories as readonly string[]).includes(value)
+  return (
+    typeof value === 'string' &&
+    (validCategories as readonly string[]).includes(value)
+  )
 }
 
 // Service category type guards
@@ -39,26 +42,36 @@ export const isServiceCategory = (value: unknown): value is ServiceCategory => {
     'backend',
     'mobile',
     'devops',
-    'consulting'
+    'consulting',
   ] as const
-  return typeof value === 'string' && (validCategories as readonly string[]).includes(value)
+  return (
+    typeof value === 'string' &&
+    (validCategories as readonly string[]).includes(value)
+  )
 }
 
 // Social platform type guards
-export const isSocialPlatform = (value: unknown): value is ConfigSocialPlatform => {
+export const isSocialPlatform = (
+  value: unknown
+): value is ConfigSocialPlatform => {
   const validPlatforms = [
     'twitter',
     'linkedin',
     'weibo',
     'wechat',
     'facebook',
-    'telegram'
+    'telegram',
   ] as const
-  return typeof value === 'string' && (validPlatforms as readonly string[]).includes(value)
+  return (
+    typeof value === 'string' &&
+    (validPlatforms as readonly string[]).includes(value)
+  )
 }
 
 // Multilingual content type guards
-export const isMultilingualContent = (value: unknown): value is MultilingualContent => {
+export const isMultilingualContent = (
+  value: unknown
+): value is MultilingualContent => {
   return (
     typeof value === 'object' &&
     value !== null &&
@@ -71,7 +84,9 @@ export const isMultilingualContent = (value: unknown): value is MultilingualCont
   )
 }
 
-export const isMultilingualArray = (value: unknown): value is MultilingualArray => {
+export const isMultilingualArray = (
+  value: unknown
+): value is MultilingualArray => {
   return (
     typeof value === 'object' &&
     value !== null &&
@@ -89,7 +104,7 @@ export const isMultilingualArray = (value: unknown): value is MultilingualArray 
 // Repository type guards
 export const isRepository = (value: unknown): value is Repository => {
   if (typeof value !== 'object' || value === null) return false
-  
+
   const repo = value as any
   return (
     typeof repo.id === 'string' &&
@@ -117,7 +132,7 @@ export const isRepository = (value: unknown): value is Repository => {
 // Member type guards
 export const isMember = (value: unknown): value is Member => {
   if (typeof value !== 'object' || value === null) return false
-  
+
   const member = value as any
   return (
     typeof member.id === 'string' &&
@@ -139,7 +154,7 @@ export const isMember = (value: unknown): value is Member => {
 // Blog post type guards
 export const isBlogPost = (value: unknown): value is BlogPost => {
   if (typeof value !== 'object' || value === null) return false
-  
+
   const post = value as any
   return (
     typeof post.id === 'string' &&
@@ -163,7 +178,7 @@ export const isBlogPost = (value: unknown): value is BlogPost => {
 // Display project type guards
 export const isDisplayProject = (value: unknown): value is DisplayProject => {
   if (typeof value !== 'object' || value === null) return false
-  
+
   const project = value as any
   return (
     typeof project.id === 'string' &&
@@ -183,9 +198,11 @@ export const isDisplayProject = (value: unknown): value is DisplayProject => {
 }
 
 // Repository analysis type guards
-export const isRepositoryAnalysis = (value: unknown): value is RepositoryAnalysis => {
+export const isRepositoryAnalysis = (
+  value: unknown
+): value is RepositoryAnalysis => {
   if (typeof value !== 'object' || value === null) return false
-  
+
   const analysis = value as any
   return (
     typeof analysis.repositoryId === 'string' &&
@@ -212,7 +229,7 @@ export const isRepositoryAnalysis = (value: unknown): value is RepositoryAnalysi
 // Error info type guards
 export const isErrorInfo = (value: unknown): value is ErrorInfo => {
   if (typeof value !== 'object' || value === null) return false
-  
+
   const error = value as any
   return (
     typeof error.code === 'string' &&
@@ -224,7 +241,7 @@ export const isErrorInfo = (value: unknown): value is ErrorInfo => {
 // Cache metadata type guards
 export const isCacheMetadata = (value: unknown): value is CacheMetadata => {
   if (typeof value !== 'object' || value === null) return false
-  
+
   const metadata = value as any
   return (
     metadata.lastUpdated instanceof Date &&
@@ -247,11 +264,15 @@ export const isBlogPostArray = (value: unknown): value is BlogPost[] => {
   return Array.isArray(value) && value.every(isBlogPost)
 }
 
-export const isDisplayProjectArray = (value: unknown): value is DisplayProject[] => {
+export const isDisplayProjectArray = (
+  value: unknown
+): value is DisplayProject[] => {
   return Array.isArray(value) && value.every(isDisplayProject)
 }
 
-export const isRepositoryAnalysisArray = (value: unknown): value is RepositoryAnalysis[] => {
+export const isRepositoryAnalysisArray = (
+  value: unknown
+): value is RepositoryAnalysis[] => {
   return Array.isArray(value) && value.every(isRepositoryAnalysis)
 }
 
@@ -291,7 +312,7 @@ export const isNumberArray = (value: unknown): value is number[] => {
 // URL validation
 export const isValidUrl = (value: unknown): value is string => {
   if (typeof value !== 'string') return false
-  
+
   try {
     new URL(value)
     return true
@@ -303,7 +324,7 @@ export const isValidUrl = (value: unknown): value is string => {
 // Email validation
 export const isValidEmail = (value: unknown): value is string => {
   if (typeof value !== 'string') return false
-  
+
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   return emailRegex.test(value)
 }
@@ -311,7 +332,7 @@ export const isValidEmail = (value: unknown): value is string => {
 // GitHub username validation
 export const isValidGitHubUsername = (value: unknown): value is string => {
   if (typeof value !== 'string') return false
-  
+
   const githubUsernameRegex = /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i
   return githubUsernameRegex.test(value)
 }
@@ -319,7 +340,7 @@ export const isValidGitHubUsername = (value: unknown): value is string => {
 // Slug validation
 export const isValidSlug = (value: unknown): value is string => {
   if (typeof value !== 'string') return false
-  
+
   const slugRegex = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
   return slugRegex.test(value)
 }
@@ -327,7 +348,7 @@ export const isValidSlug = (value: unknown): value is string => {
 // Color validation (hex color)
 export const isValidHexColor = (value: unknown): value is string => {
   if (typeof value !== 'string') return false
-  
+
   const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/
   return hexColorRegex.test(value)
 }
@@ -335,7 +356,7 @@ export const isValidHexColor = (value: unknown): value is string => {
 // ISO date string validation
 export const isValidISODateString = (value: unknown): value is string => {
   if (typeof value !== 'string') return false
-  
+
   const date = new Date(value)
   return !isNaN(date.getTime()) && value === date.toISOString()
 }
@@ -352,7 +373,9 @@ export const isNonNegativeNumber = (value: unknown): value is number => {
 
 // Percentage validation (0-100)
 export const isValidPercentage = (value: unknown): value is number => {
-  return typeof value === 'number' && !isNaN(value) && value >= 0 && value <= 100
+  return (
+    typeof value === 'number' && !isNaN(value) && value >= 0 && value <= 100
+  )
 }
 
 // Confidence score validation (0-1)

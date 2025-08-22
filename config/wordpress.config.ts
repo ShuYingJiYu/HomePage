@@ -6,7 +6,7 @@
 import type { WordPressConfig } from '../src/types/config';
 
 export const wordpressConfig: WordPressConfig = {
-  apiUrl: import.meta.env.VITE_WORDPRESS_API_URL || '',
+  apiUrl: (typeof import.meta !== 'undefined' && import.meta.env?.VITE_WORDPRESS_API_URL) || process.env.VITE_WORDPRESS_API_URL || '',
   
   // Categories to fetch from WordPress
   categories: [

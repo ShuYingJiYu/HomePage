@@ -33,12 +33,12 @@ export interface SocialShareContent {
   platform?: SocialPlatform
 }
 
-export type SocialPlatform = 
-  | 'twitter' 
-  | 'linkedin' 
-  | 'weibo' 
-  | 'wechat' 
-  | 'facebook' 
+export type SocialPlatform =
+  | 'twitter'
+  | 'linkedin'
+  | 'weibo'
+  | 'wechat'
+  | 'facebook'
   | 'telegram'
 
 export interface SocialPlatformConfig {
@@ -263,7 +263,10 @@ export interface SocialMediaManager {
   publishPost(post: SocialPost): Promise<PostResult>
   deletePost(postId: string, platform: SocialPlatform): Promise<void>
   updatePost(postId: string, updates: Partial<SocialPost>): Promise<PostResult>
-  getAnalytics(platform: SocialPlatform, dateRange: SocialDateRange): Promise<SocialAnalytics>
+  getAnalytics(
+    platform: SocialPlatform,
+    dateRange: SocialDateRange
+  ): Promise<SocialAnalytics>
   crossPost(content: CrossPostContent): Promise<CrossPostResult[]>
 }
 

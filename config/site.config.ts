@@ -91,7 +91,7 @@ export const siteConfig: SiteConfig = {
   },
   
   social: {
-    github: 'https://github.com/' + (import.meta.env.VITE_GITHUB_ORG || import.meta.env.VITE_GITHUB_USER || ''),
+    github: `https://github.com/${  import.meta.env.VITE_GITHUB_ORG || import.meta.env.VITE_GITHUB_USER || ''}`,
     twitter: undefined,
     linkedin: undefined,
     weibo: undefined,

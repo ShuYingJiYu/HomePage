@@ -8,7 +8,7 @@ import type {
   MultilingualArray,
   ProjectCategory,
   CacheMetadata,
-  ErrorInfo
+  ErrorInfo,
 } from '@/types'
 
 // Data transformation utilities
@@ -36,33 +36,40 @@ export class DataTransformer {
       createdAt: new Date(githubRepo.created_at),
       pushedAt: new Date(githubRepo.pushed_at),
       homepage: githubRepo.homepage || undefined,
-      license: githubRepo.license ? {
-        key: githubRepo.license.key,
-        name: githubRepo.license.name,
-        spdxId: githubRepo.license.spdx_id,
-        url: githubRepo.license.url
-      } : undefined,
+      license: githubRepo.license
+        ? {
+            key: githubRepo.license.key,
+            name: githubRepo.license.name,
+            spdxId: githubRepo.license.spdx_id,
+            url: githubRepo.license.url,
+          }
+        : undefined,
       owner: {
         login: githubRepo.owner.login,
         id: githubRepo.owner.id,
         type: githubRepo.owner.type,
         avatarUrl: githubRepo.owner.avatar_url,
-        htmlUrl: githubRepo.owner.html_url
+        htmlUrl: githubRepo.owner.html_url,
       },
       urls: {
         html: githubRepo.html_url,
         git: githubRepo.git_url,
         ssh: githubRepo.ssh_url,
         clone: githubRepo.clone_url,
-        api: githubRepo.url
-      }
+        api: githubRepo.url,
+      },
     }
   }
 
   /**
    * Transform WordPress post data to internal BlogPost format
    */
-  static transformWordPressPost(wpPost: any, author: any, categories: any[], tags: any[]): BlogPost {
+  static transformWordPressPost(
+    wpPost: any,
+    author: any,
+    categories: any[],
+    tags: any[]
+  ): BlogPost {
     return {
       id: wpPost.id.toString(),
       title: wpPost.title.rendered,
@@ -79,8 +86,8 @@ export class DataTransformer {
         avatar: author.avatar_urls['96'],
         url: author.url,
         socialLinks: {
-          website: author.url
-        }
+          website: author.url,
+        },
       },
       categories: categories.map(cat => ({
         id: cat.id,
@@ -88,16 +95,18 @@ export class DataTransformer {
         slug: cat.slug,
         description: cat.description,
         parent: cat.parent,
-        count: cat.count
+        count: cat.count,
       })),
       tags: tags.map(tag => ({
         id: tag.id,
         name: tag.name,
         slug: tag.slug,
         description: tag.description,
-        count: tag.count
+        count: tag.count,
       })),
-      language: this.detectLanguage(wpPost.title.rendered + ' ' + wpPost.content.rendered),
+      language: this.detectLanguage(
+        `${wpPost.title.rendered} ${wpPost.content.rendered}`
+      ),
       status: wpPost.status as 'publish' | 'draft' | 'private',
       commentStatus: wpPost.comment_status as 'open' | 'closed',
       pingStatus: wpPost.ping_status as 'open' | 'closed',
@@ -108,8 +117,10 @@ export class DataTransformer {
       readingTime: this.calculateReadingTime(wpPost.content.rendered),
       seo: {
         title: wpPost.title.rendered,
-        description: wpPost.excerpt.rendered.replace(/<[^>]*>/g, '').substring(0, 160)
-      }
+        description: wpPost.excerpt.rendered
+          .replace(/<[^>]*>/g, '')
+          .substring(0, 160),
+      },
     }
   }
 
@@ -120,7 +131,7 @@ export class DataTransformer {
     // Simple language detection based on character patterns
     const chinesePattern = /[\u4e00-\u9fff]/
     const hasChineseChars = chinesePattern.test(text)
-    
+
     if (hasChineseChars) {
       return 'zh'
     }
@@ -132,7 +143,10 @@ export class DataTransformer {
    */
   static countWords(htmlContent: string): number {
     const textContent = htmlContent.replace(/<[^>]*>/g, ' ')
-    const words = textContent.trim().split(/\s+/).filter(word => word.length > 0)
+    const words = textContent
+      .trim()
+      .split(/\s+/)
+      .filter(word => word.length > 0)
     return words.length
   }
 
@@ -149,7 +163,7 @@ export class DataTransformer {
    * Transform Repository and RepositoryAnalysis to DisplayProject
    */
   static transformToDisplayProject(
-    repo: Repository, 
+    repo: Repository,
     analysis: RepositoryAnalysis
   ): DisplayProject {
     return {
@@ -169,11 +183,11 @@ export class DataTransformer {
         commits: 0, // Will be populated by GitHub API
         contributors: 0, // Will be populated by GitHub API
         issues: 0, // Will be populated by GitHub API
-        pullRequests: 0 // Will be populated by GitHub API
+        pullRequests: 0, // Will be populated by GitHub API
       },
       lastUpdated: repo.lastUpdated,
       featured: analysis.score >= 80,
-      aiGenerated: true
+      aiGenerated: true,
     }
   }
 }
@@ -229,7 +243,7 @@ export class DataValidator {
       'open-source',
       'library',
       'automation',
-      'other'
+      'other',
     ]
     return validCategories.includes(category)
   }
@@ -237,7 +251,9 @@ export class DataValidator {
   /**
    * Validate multilingual content
    */
-  static validateMultilingualContent(content: any): content is MultilingualContent {
+  static validateMultilingualContent(
+    content: any
+  ): content is MultilingualContent {
     return (
       typeof content === 'object' &&
       content !== null &&
@@ -276,7 +292,7 @@ export class DataProcessor {
   ): MultilingualContent {
     return {
       zh: override.zh || base.zh,
-      en: override.en || base.en
+      en: override.en || base.en,
     }
   }
 
@@ -285,29 +301,53 @@ export class DataProcessor {
    */
   static extractTechStack(repo: Repository): string[] {
     const techStack = new Set<string>()
-    
+
     // Add primary language
     if (repo.language) {
       techStack.add(repo.language)
     }
-    
+
     // Add topics as potential tech stack items
     repo.topics.forEach(topic => {
       // Filter out non-technical topics
       const technicalTopics = [
-        'javascript', 'typescript', 'python', 'java', 'go', 'rust', 'cpp',
-        'react', 'vue', 'angular', 'svelte', 'nextjs', 'nuxtjs',
-        'nodejs', 'express', 'fastapi', 'django', 'spring',
-        'docker', 'kubernetes', 'aws', 'gcp', 'azure',
-        'mongodb', 'postgresql', 'mysql', 'redis',
-        'graphql', 'rest-api', 'grpc'
+        'javascript',
+        'typescript',
+        'python',
+        'java',
+        'go',
+        'rust',
+        'cpp',
+        'react',
+        'vue',
+        'angular',
+        'svelte',
+        'nextjs',
+        'nuxtjs',
+        'nodejs',
+        'express',
+        'fastapi',
+        'django',
+        'spring',
+        'docker',
+        'kubernetes',
+        'aws',
+        'gcp',
+        'azure',
+        'mongodb',
+        'postgresql',
+        'mysql',
+        'redis',
+        'graphql',
+        'rest-api',
+        'grpc',
       ]
-      
+
       if (technicalTopics.includes(topic.toLowerCase())) {
         techStack.add(topic)
       }
     })
-    
+
     return Array.from(techStack)
   }
 
@@ -316,29 +356,39 @@ export class DataProcessor {
    */
   static calculateComplexityScore(repo: Repository): number {
     let score = 0
-    
+
     // Size factor (0-30 points)
     score += Math.min(repo.size / 1000, 30)
-    
+
     // Language factor (0-20 points)
     const complexLanguages = ['rust', 'cpp', 'c', 'assembly', 'haskell']
-    if (repo.language && complexLanguages.includes(repo.language.toLowerCase())) {
+    if (
+      repo.language &&
+      complexLanguages.includes(repo.language.toLowerCase())
+    ) {
       score += 20
     } else if (repo.language) {
       score += 10
     }
-    
+
     // Topics factor (0-20 points)
-    const complexTopics = ['machine-learning', 'ai', 'blockchain', 'cryptography', 'compiler']
-    const hasComplexTopics = repo.topics.some(topic => 
+    const complexTopics = [
+      'machine-learning',
+      'ai',
+      'blockchain',
+      'cryptography',
+      'compiler',
+    ]
+    const hasComplexTopics = repo.topics.some(topic =>
       complexTopics.some(complex => topic.toLowerCase().includes(complex))
     )
     if (hasComplexTopics) {
       score += 20
     }
-    
+
     // Activity factor (0-30 points)
-    const daysSinceUpdate = (Date.now() - repo.lastUpdated.getTime()) / (1000 * 60 * 60 * 24)
+    const daysSinceUpdate =
+      (Date.now() - repo.lastUpdated.getTime()) / (1000 * 60 * 60 * 24)
     if (daysSinceUpdate < 30) {
       score += 30
     } else if (daysSinceUpdate < 90) {
@@ -346,7 +396,7 @@ export class DataProcessor {
     } else if (daysSinceUpdate < 365) {
       score += 10
     }
-    
+
     return Math.min(score, 100)
   }
 
@@ -369,14 +419,14 @@ export class DataProcessor {
     if (text.length <= maxLength) {
       return text
     }
-    
+
     const truncated = text.substring(0, maxLength - suffix.length)
     const lastSpace = truncated.lastIndexOf(' ')
-    
+
     if (lastSpace > 0) {
       return truncated.substring(0, lastSpace) + suffix
     }
-    
+
     return truncated + suffix
   }
 
@@ -388,12 +438,12 @@ export class DataProcessor {
       // Featured projects first
       if (a.featured && !b.featured) return -1
       if (!a.featured && b.featured) return 1
-      
+
       // Then by stars
       if (a.stats.stars !== b.stats.stars) {
         return b.stats.stars - a.stats.stars
       }
-      
+
       // Then by last updated
       return b.lastUpdated.getTime() - a.lastUpdated.getTime()
     })
@@ -402,9 +452,11 @@ export class DataProcessor {
   /**
    * Group projects by category
    */
-  static groupProjectsByCategory(projects: DisplayProject[]): Record<ProjectCategory, DisplayProject[]> {
+  static groupProjectsByCategory(
+    projects: DisplayProject[]
+  ): Record<ProjectCategory, DisplayProject[]> {
     const grouped = {} as Record<ProjectCategory, DisplayProject[]>
-    
+
     // Initialize all categories
     const categories: ProjectCategory[] = [
       'web-app',
@@ -412,18 +464,18 @@ export class DataProcessor {
       'open-source',
       'library',
       'automation',
-      'other'
+      'other',
     ]
-    
+
     categories.forEach(category => {
       grouped[category] = []
     })
-    
+
     // Group projects
     projects.forEach(project => {
       grouped[project.category].push(project)
     })
-    
+
     return grouped
   }
 }
@@ -454,7 +506,7 @@ export class CacheManager {
       lastUpdated: now,
       expiresAt: new Date(now.getTime() + ttl),
       version: '1.0.0',
-      source
+      source,
     }
   }
 
@@ -469,9 +521,10 @@ export class CacheManager {
       const validatedData = validator(data)
       return { valid: true, data: validatedData }
     } catch (error) {
-      return { 
-        valid: false, 
-        error: error instanceof Error ? error.message : 'Unknown validation error' 
+      return {
+        valid: false,
+        error:
+          error instanceof Error ? error.message : 'Unknown validation error',
       }
     }
   }
@@ -482,12 +535,16 @@ export class ErrorHandler {
   /**
    * Create standardized error info
    */
-  static createErrorInfo(code: string, message: string, details?: Record<string, unknown>): ErrorInfo {
+  static createErrorInfo(
+    code: string,
+    message: string,
+    details?: Record<string, unknown>
+  ): ErrorInfo {
     return {
       code,
       message,
       details,
-      timestamp: new Date()
+      timestamp: new Date(),
     }
   }
 
@@ -503,16 +560,14 @@ export class ErrorHandler {
         {
           status: error.response.status,
           url: error.config?.url,
-          method: error.config?.method
+          method: error.config?.method,
         }
       )
     } else if (error.request) {
       // Network error
-      return this.createErrorInfo(
-        'NETWORK_ERROR',
-        'Network request failed',
-        { originalError: error.message }
-      )
+      return this.createErrorInfo('NETWORK_ERROR', 'Network request failed', {
+        originalError: error.message,
+      })
     } else {
       // Other error
       return this.createErrorInfo(
@@ -532,9 +587,9 @@ export class ErrorHandler {
       'HTTP_502', // Bad gateway
       'HTTP_503', // Service unavailable
       'HTTP_504', // Gateway timeout
-      'NETWORK_ERROR'
+      'NETWORK_ERROR',
     ]
-    
+
     return retryableCodes.includes(error.code)
   }
 }
@@ -574,7 +629,7 @@ export const utils = {
       if (!inThrottle) {
         func(...args)
         inThrottle = true
-        setTimeout(() => inThrottle = false, limit)
+        setTimeout(() => (inThrottle = false), limit)
       }
     }
   },
@@ -588,22 +643,22 @@ export const utils = {
     baseDelay: number = 1000
   ): Promise<T> => {
     let lastError: Error
-    
+
     for (let attempt = 1; attempt <= maxAttempts; attempt++) {
       try {
         return await fn()
       } catch (error) {
         lastError = error instanceof Error ? error : new Error(String(error))
-        
+
         if (attempt === maxAttempts) {
           throw lastError
         }
-        
+
         const delay = baseDelay * Math.pow(2, attempt - 1)
         await new Promise(resolve => setTimeout(resolve, delay))
       }
     }
-    
+
     throw lastError!
   },
 
@@ -614,12 +669,12 @@ export const utils = {
     const units = ['B', 'KB', 'MB', 'GB', 'TB']
     let size = bytes
     let unitIndex = 0
-    
+
     while (size >= 1024 && unitIndex < units.length - 1) {
       size /= 1024
       unitIndex++
     }
-    
+
     return `${size.toFixed(1)} ${units[unitIndex]}`
   },
 
@@ -630,7 +685,7 @@ export const utils = {
     const now = new Date()
     const diffMs = now.getTime() - date.getTime()
     const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24))
-    
+
     if (diffDays === 0) {
       const diffHours = Math.floor(diffMs / (1000 * 60 * 60))
       if (diffHours === 0) {
@@ -652,5 +707,5 @@ export const utils = {
       const diffYears = Math.floor(diffDays / 365)
       return `${diffYears} year${diffYears > 1 ? 's' : ''} ago`
     }
-  }
+  },
 }

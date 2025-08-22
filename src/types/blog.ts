@@ -18,7 +18,17 @@ export interface BlogPost {
   commentStatus: 'open' | 'closed'
   pingStatus: 'open' | 'closed'
   sticky: boolean
-  format: 'standard' | 'aside' | 'gallery' | 'link' | 'image' | 'quote' | 'status' | 'video' | 'audio' | 'chat'
+  format:
+    | 'standard'
+    | 'aside'
+    | 'gallery'
+    | 'link'
+    | 'image'
+    | 'quote'
+    | 'status'
+    | 'video'
+    | 'audio'
+    | 'chat'
   originalUrl: string
   wordCount: number
   readingTime: number
@@ -202,13 +212,16 @@ export interface WordPressMedia {
     width: number
     height: number
     file: string
-    sizes: Record<string, {
-      file: string
-      width: number
-      height: number
-      mime_type: string
-      source_url: string
-    }>
+    sizes: Record<
+      string,
+      {
+        file: string
+        width: number
+        height: number
+        mime_type: string
+        source_url: string
+      }
+    >
     image_meta: Record<string, unknown>
   }
   source_url: string
