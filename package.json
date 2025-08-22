@@ -1,0 +1,47 @@
+{
+  "name": "shuying-studio-homepage",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:fresh": "npm run data:fetch && npm run data:analyze && vite",
+    "build": "npm run seo:generate && tsc && vite build",
+    "preview": "vite preview",
+    "data:fetch": "node scripts/fetch-all-data.js",
+    "data:fetch:github": "node scripts/fetch-github.js",
+    "data:fetch:wordpress": "node scripts/fetch-wordpress.js",
+    "data:fetch:status": "node scripts/fetch-status.js",
+    "data:analyze": "node scripts/ai-analysis.js",
+    "seo:generate": "node scripts/generate-seo.js",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext ts,tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.20.1",
+    "react-i18next": "^13.5.0",
+    "i18next": "^23.7.6",
+    "react-helmet-async": "^2.0.4"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
+    "@vitejs/plugin-react": "^4.1.1",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.53.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.4",
+    "postcss": "^8.4.32",
+    "prettier": "^3.1.0",
+    "tailwindcss": "^3.3.6",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0"
+  }
+}
