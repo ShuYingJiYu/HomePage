@@ -9,19 +9,18 @@ export * from './seo'
 // Config types (with renamed exports to avoid conflicts)
 export type { 
   SiteConfig,
-  SiteInfo,
-  ContactInfo,
   GitHubConfig,
   WordPressConfig,
   AIConfig,
-  AnalyticsConfig,
-  SocialConfig,
-  MonitoringConfig,
-  SEOConfig,
-  SitePerformanceConfig as ConfigPerformanceConfig,
-  DeploymentConfig,
   EnvironmentVariables,
-  BuildConfig
+  ConfigValidationError,
+  ConfigValidationResult,
+  ConfigLoaderOptions,
+  Language,
+  ProjectCategory,
+  ErrorRecoveryStrategy,
+  CacheStrategy as ConfigCacheStrategy,
+  SocialPlatform as ConfigSocialPlatform
 } from './config'
 
 // Social types (with renamed exports to avoid conflicts)
@@ -29,7 +28,7 @@ export type {
   SocialShareManager,
   ShareableContent,
   SocialShareContent,
-  SocialPlatform,
+  SocialPlatform as SocialSocialPlatform,
   SocialPlatformConfig,
   SocialShareParameter,
   PlatformCustomization,
@@ -92,7 +91,7 @@ export type {
   DuplicateModule,
   UnusedCodeEntry,
   BundleRecommendation,
-  CacheStrategy,
+  CacheStrategy as PerformanceCacheStrategy,
   BrowserCacheConfig,
   CDNCacheConfig,
   ApplicationCacheConfig,

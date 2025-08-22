@@ -9,7 +9,7 @@ import type {
   ServiceCategory,
   MultilingualContent,
   MultilingualArray,
-  SocialPlatform,
+  ConfigSocialPlatform,
   ErrorInfo,
   CacheMetadata
 } from '@/types'
@@ -45,7 +45,7 @@ export const isServiceCategory = (value: unknown): value is ServiceCategory => {
 }
 
 // Social platform type guards
-export const isSocialPlatform = (value: unknown): value is SocialPlatform => {
+export const isSocialPlatform = (value: unknown): value is ConfigSocialPlatform => {
   const validPlatforms = [
     'twitter',
     'linkedin',

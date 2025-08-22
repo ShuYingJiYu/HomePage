@@ -1,269 +1,204 @@
-import { Language, MultilingualContent } from './common'
+/**
+ * Configuration type definitions for the homepage system
+ * Defines all configuration interfaces and types used throughout the application
+ */
 
-// Site Configuration types
+export type Language = 'zh' | 'en';
+export type ProjectCategory = 'web-app' | 'mobile-app' | 'open-source' | 'library' | 'automation' | 'other';
+export type ErrorRecoveryStrategy = 'use-cache' | 'skip-feature' | 'use-fallback' | 'retry-backoff' | 'fail-build';
+export type CacheStrategy = 'aggressive' | 'moderate' | 'minimal';
+export type SocialPlatform = 'twitter' | 'linkedin' | 'weibo' | 'wechat';
+
+/**
+ * Main site configuration interface
+ */
 export interface SiteConfig {
-  site: SiteInfo
-  github: GitHubConfig
-  wordpress?: WordPressConfig
-  ai: AIConfig
-  analytics?: AnalyticsConfig
-  social: SocialConfig
-  monitoring?: MonitoringConfig
-  seo: SEOConfig
-  performance: SitePerformanceConfig
-  deployment: DeploymentConfig
+  site: {
+    name: {
+      zh: string;
+      en: string;
+    };
+    description: {
+      zh: string;
+      en: string;
+    };
+    url: string;
+    defaultLanguage: Language;
+    supportedLanguages: Language[];
+    logo?: string;
+    favicon?: string;
+  };
+  
+  github: {
+    organization: string;
+    personalAccount: string;
+    excludeRepositories: string[];
+    includeRepositories?: string[];
+    accessToken: string;
+  };
+  
+  wordpress: {
+    apiUrl: string;
+    categories?: string[];
+    multilingualSupport: boolean;
+  };
+  
+  ai: {
+    geminiApiKey: string;
+    analysisPrompts: {
+      projectEvaluation: string;
+      descriptionGeneration: string;
+      categoryClassification: string;
+      multilingualGeneration: string;
+    };
+    fallbackStrategy: ErrorRecoveryStrategy;
+  };
+  
+  analytics: {
+    googleAnalyticsId?: string;
+    enableCookieConsent: boolean;
+    trackingEvents: string[];
+  };
+  
+  social: {
+    github: string;
+    twitter?: string;
+    linkedin?: string;
+    weibo?: string;
+    wechat?: string;
+    email: string;
+    shareButtons: SocialPlatform[];
+  };
+  
+  monitoring?: {
+    betterStackApiKey?: string;
+    statusPageUrl?: string;
+    enableStatusPage: boolean;
+  };
+  
+  seo: {
+    enableSitemap: boolean;
+    enableRobotsTxt: boolean;
+    enableStructuredData: boolean;
+    defaultKeywords: {
+      zh: string[];
+      en: string[];
+    };
+  };
+  
+  performance: {
+    enableWebVitals: boolean;
+    enableImageOptimization: boolean;
+    enableCodeSplitting: boolean;
+    cacheStrategy: CacheStrategy;
+  };
 }
 
-export interface SiteInfo {
-  name: MultilingualContent
-  description: MultilingualContent
-  url: string
-  defaultLanguage: Language
-  supportedLanguages: Language[]
-  logo?: string
-  favicon?: string
-  author: MultilingualContent
-  keywords: {
-    zh: string[]
-    en: string[]
-  }
-  contact: ContactInfo
-}
-
-export interface ContactInfo {
-  email: string
-  phone?: string
-  address?: MultilingualContent
-  businessHours?: MultilingualContent
-  timezone: string
-}
-
+/**
+ * GitHub specific configuration
+ */
 export interface GitHubConfig {
-  organization: string
-  personalAccount: string
-  excludeRepositories: string[]
-  includeRepositories?: string[]
-  accessToken: string
-  rateLimit: {
-    requestsPerHour: number
-    retryAfter: number
-  }
-  features: {
-    fetchContributions: boolean
-    fetchReleases: boolean
-    fetchIssues: boolean
-    fetchPullRequests: boolean
-  }
+  organization: string;
+  personalAccount: string;
+  accessToken: string;
+  excludeRepositories: string[];
+  includeRepositories?: string[];
+  rateLimiting: {
+    requestsPerHour: number;
+    retryAfter: number;
+  };
+  errorHandling: {
+    rateLimitStrategy: ErrorRecoveryStrategy;
+    networkErrorStrategy: ErrorRecoveryStrategy;
+    authErrorStrategy: ErrorRecoveryStrategy;
+  };
 }
 
-export interface WordPressConfig {
-  apiUrl: string
-  username?: string
-  password?: string
-  categories?: string[]
-  tags?: string[]
-  multilingualSupport: boolean
-  postsPerPage: number
-  features: {
-    fetchMedia: boolean
-    fetchComments: boolean
-    fetchAuthors: boolean
-  }
-}
-
+/**
+ * AI configuration for Gemini API
+ */
 export interface AIConfig {
-  provider: 'gemini' | 'openai' | 'claude'
-  geminiApiKey?: string
-  openaiApiKey?: string
-  claudeApiKey?: string
+  geminiApiKey: string;
   analysisPrompts: {
-    projectEvaluation: string
-    descriptionGeneration: string
-    categoryClassification: string
-    multilingualGeneration: string
-    seoOptimization: string
-  }
-  fallbackStrategy: 'cache' | 'manual' | 'skip'
-  rateLimit: {
-    requestsPerMinute: number
-    quotaLimit: number
-  }
-  features: {
-    projectAnalysis: boolean
-    contentGeneration: boolean
-    seoOptimization: boolean
-    imageAnalysis: boolean
-  }
+    projectEvaluation: string;
+    descriptionGeneration: string;
+    categoryClassification: string;
+    multilingualGeneration: string;
+  };
+  fallbackStrategy: ErrorRecoveryStrategy;
+  rateLimiting: {
+    requestsPerMinute: number;
+    quotaLimit: number;
+  };
+  errorHandling: {
+    quotaExceededStrategy: ErrorRecoveryStrategy;
+    networkErrorStrategy: ErrorRecoveryStrategy;
+  };
 }
 
-export interface AnalyticsConfig {
-  googleAnalyticsId?: string
-  baiduAnalyticsId?: string
-  enableCookieConsent: boolean
-  trackingEvents: string[]
-  customDimensions?: CustomDimension[]
-  goals?: AnalyticsGoal[]
-  privacy: {
-    anonymizeIp: boolean
-    respectDoNotTrack: boolean
-    cookieExpiry: number
-  }
+/**
+ * WordPress configuration
+ */
+export interface WordPressConfig {
+  apiUrl: string;
+  categories?: string[];
+  multilingualSupport: boolean;
+  errorHandling: {
+    networkErrorStrategy: ErrorRecoveryStrategy;
+    notFoundStrategy: ErrorRecoveryStrategy;
+  };
 }
 
-export interface CustomDimension {
-  index: number
-  name: string
-  scope: 'hit' | 'session' | 'user' | 'product'
-}
-
-export interface AnalyticsGoal {
-  id: number
-  name: string
-  type: 'destination' | 'duration' | 'pages' | 'event'
-  value?: number
-}
-
-export interface SocialConfig {
-  github: string
-  twitter?: string
-  linkedin?: string
-  weibo?: string
-  wechat?: string
-  email: string
-  shareButtons: SocialPlatform[]
-  openGraph: {
-    siteName: string
-    type: string
-    locale: string
-    alternateLocales: string[]
-  }
-}
-
-export type SocialPlatform = 'twitter' | 'linkedin' | 'weibo' | 'wechat' | 'facebook' | 'telegram'
-
-export interface MonitoringConfig {
-  betterStackApiKey?: string
-  statusPageUrl?: string
-  enableStatusPage: boolean
-  services: MonitoredService[]
-  notifications: {
-    email?: string
-    webhook?: string
-    slack?: string
-  }
-}
-
-export interface MonitoredService {
-  name: MultilingualContent
-  url: string
-  type: 'http' | 'ping' | 'tcp' | 'dns'
-  interval: number
-  timeout: number
-  expectedStatus?: number
-  expectedContent?: string
-}
-
-export interface SEOConfig {
-  enableSitemap: boolean
-  enableRobotsTxt: boolean
-  enableStructuredData: boolean
-  defaultKeywords: {
-    zh: string[]
-    en: string[]
-  }
-  searchConsole: {
-    google?: string
-    baidu?: string
-    bing?: string
-  }
-  features: {
-    autoGenerateMeta: boolean
-    optimizeImages: boolean
-    generateAltText: boolean
-  }
-}
-
-export interface SitePerformanceConfig {
-  enableWebVitals: boolean
-  enableImageOptimization: boolean
-  enableCodeSplitting: boolean
-  cacheStrategy: 'aggressive' | 'moderate' | 'minimal'
-  compression: {
-    gzip: boolean
-    brotli: boolean
-  }
-  cdn: {
-    enabled: boolean
-    provider?: 'cloudflare' | 'aws' | 'vercel'
-    customDomain?: string
-  }
-  optimization: {
-    minifyCSS: boolean
-    minifyJS: boolean
-    optimizeImages: boolean
-    lazyLoading: boolean
-  }
-}
-
-export interface DeploymentConfig {
-  platform: 'vercel' | 'netlify' | 'github-pages' | 'aws-s3'
-  domain?: string
-  customDomain?: string
-  environment: 'development' | 'staging' | 'production'
-  buildCommand: string
-  outputDirectory: string
-  environmentVariables: Record<string, string>
-  redirects?: Redirect[]
-  headers?: Header[]
-}
-
-export interface Redirect {
-  source: string
-  destination: string
-  permanent: boolean
-  statusCode?: number
-}
-
-export interface Header {
-  source: string
-  headers: Record<string, string>
-}
-
-// Environment Variables
+/**
+ * Environment variables interface
+ */
 export interface EnvironmentVariables {
-  NODE_ENV: 'development' | 'production' | 'test'
-  VITE_SITE_URL: string
-  VITE_DEFAULT_LANGUAGE: Language
-  GITHUB_TOKEN: string
-  GITHUB_ORG: string
-  GITHUB_USER: string
-  WORDPRESS_API_URL?: string
-  WORDPRESS_USERNAME?: string
-  WORDPRESS_PASSWORD?: string
-  GEMINI_API_KEY?: string
-  OPENAI_API_KEY?: string
-  CLAUDE_API_KEY?: string
-  GOOGLE_ANALYTICS_ID?: string
-  BAIDU_ANALYTICS_ID?: string
-  BETTERSTACK_API_KEY?: string
-  VERCEL_TOKEN?: string
-  VERCEL_ORG_ID?: string
-  VERCEL_PROJECT_ID?: string
+  // GitHub
+  VITE_GITHUB_TOKEN: string;
+  VITE_GITHUB_ORG: string;
+  VITE_GITHUB_USER: string;
+  
+  // AI
+  VITE_GEMINI_API_KEY: string;
+  
+  // WordPress
+  VITE_WORDPRESS_API_URL: string;
+  
+  // Monitoring (Optional)
+  VITE_BETTERSTACK_API_KEY?: string;
+  
+  // Analytics
+  VITE_GA_MEASUREMENT_ID?: string;
+  
+  // Site
+  VITE_SITE_URL: string;
+  VITE_DEFAULT_LANGUAGE: Language;
 }
 
-// Build Configuration
-export interface BuildConfig {
-  input: string
-  output: string
-  publicPath: string
-  assetsDir: string
-  sourcemap: boolean
-  minify: boolean
-  target: string[]
-  rollupOptions: {
-    external?: string[]
-    output?: {
-      manualChunks?: Record<string, string[]>
-    }
-  }
+/**
+ * Configuration validation error
+ */
+export interface ConfigValidationError {
+  field: string;
+  message: string;
+  value?: unknown;
+}
+
+/**
+ * Configuration validation result
+ */
+export interface ConfigValidationResult {
+  isValid: boolean;
+  errors: ConfigValidationError[];
+  warnings: ConfigValidationError[];
+}
+
+/**
+ * Configuration loader options
+ */
+export interface ConfigLoaderOptions {
+  validateOnLoad: boolean;
+  throwOnValidationError: boolean;
+  enableFallbacks: boolean;
+  logLevel: 'debug' | 'info' | 'warn' | 'error';
 }

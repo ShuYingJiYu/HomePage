@@ -4,6 +4,17 @@ export * from './data-tools'
 export * from './type-guards'
 export * from './constants'
 
+// Configuration management exports
+export { ConfigLoader, validateEnvironment } from './config-loader'
+export { ConfigErrorHandler, ConfigError, createConfigError } from './config-error-handler'
+export { 
+  ConfigManager, 
+  getConfigManager, 
+  initializeConfig, 
+  isFeatureEnabled, 
+  getApiConfig 
+} from './config-manager'
+
 // Re-export commonly used utilities
 export {
   DataTransformer,

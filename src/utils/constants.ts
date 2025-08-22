@@ -1,4 +1,4 @@
-import type { Language, ProjectCategory, ServiceCategory, SocialPlatform } from '@/types'
+import type { Language, ProjectCategory, ServiceCategory, ConfigSocialPlatform } from '@/types'
 
 // Language constants
 export const LANGUAGES: Record<Language, string> = {
@@ -62,7 +62,7 @@ export const SERVICE_CATEGORIES: Record<ServiceCategory, { zh: string; en: strin
 } as const
 
 // Social platform constants
-export const SOCIAL_PLATFORMS: Record<SocialPlatform, { name: string; icon: string; color: string }> = {
+export const SOCIAL_PLATFORMS: Record<ConfigSocialPlatform, { name: string; icon: string; color: string }> = {
   'twitter': {
     name: 'Twitter',
     icon: 'twitter',
@@ -82,17 +82,7 @@ export const SOCIAL_PLATFORMS: Record<SocialPlatform, { name: string; icon: stri
     name: '微信',
     icon: 'wechat',
     color: '#07C160'
-  },
-  'facebook': {
-    name: 'Facebook',
-    icon: 'facebook',
-    color: '#1877F2'
-  },
-  'telegram': {
-    name: 'Telegram',
-    icon: 'telegram',
-    color: '#0088CC'
-  },
+  }
 
 } as const
 
