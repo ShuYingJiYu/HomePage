@@ -1,0 +1,30 @@
+{
+  "services": [
+    {
+      "name": "Website",
+      "status": "operational",
+      "responseTime": 150,
+      "uptime": 99.9,
+      "lastChecked": "2025-08-22T18:52:33.893Z"
+    },
+    {
+      "name": "API",
+      "status": "operational",
+      "responseTime": 80,
+      "uptime": 99.8,
+      "lastChecked": "2025-08-22T18:52:33.893Z"
+    },
+    {
+      "name": "Database",
+      "status": "operational",
+      "responseTime": 25,
+      "uptime": 99.95,
+      "lastChecked": "2025-08-22T18:52:33.893Z"
+    }
+  ],
+  "overall": {
+    "status": "operational",
+    "uptime": 99.85,
+    "incidents": 0
+  }
+}
