@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { ConfigManager } from '../../src/utils/config-manager';
+import { ConfigManager } from '@/utils/config-manager';
 
 // Mock the config loader and error handler
 vi.mock('../../src/utils/config-loader', () => ({

@@ -25,7 +25,7 @@ import {
   contentFilters,
   languageDetection,
   contentTransformation,
-} from '../../config/wordpress.config'
+} from '@/config/wordpress.config'
 
 /**
  * WordPress API Error types

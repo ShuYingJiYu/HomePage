@@ -11,8 +11,8 @@ import type {
   BlogStats,
 } from '@/types/blog'
 import type { Language } from '@/types/common'
-import { WordPressFetcher, WordPressApiError } from './wordpress-fetcher'
-import { wordpressConfig } from '../../config/wordpress.config'
+import { WordPressFetcher, WordPressApiError } from '@/services/wordpress-fetcher'
+import { wordpressConfig } from '@/config/wordpress.config'
 
 /**
  * WordPress data processing result

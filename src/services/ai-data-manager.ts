@@ -16,7 +16,7 @@ import type {
 import type { Repository, DisplayProject } from '@/types/repository';
 import type { ProjectCategory } from '@/types/common';
 import { GeminiAnalyzer } from './gemini-analyzer';
-import { aiConfig } from '../../config/ai.config';
+import { aiConfig } from '@/config/ai.config';
 
 export class AIDataManager implements ContentReviewSystem {
   private analyzer: GeminiAnalyzer;

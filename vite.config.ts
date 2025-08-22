@@ -13,8 +13,10 @@ export default defineConfig({
       '@/hooks': resolve(__dirname, './src/hooks'),
       '@/utils': resolve(__dirname, './src/utils'),
       '@/types': resolve(__dirname, './src/types'),
+      '@/services': resolve(__dirname, './src/services'),
       '@/data': resolve(__dirname, './data'),
       '@/config': resolve(__dirname, './config'),
+      '@/scripts': resolve(__dirname, './scripts'),
     },
   },
   build: {

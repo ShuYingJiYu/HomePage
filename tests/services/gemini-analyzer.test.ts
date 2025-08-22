@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import type { Repository } from '../../src/types/repository';
+import type { Repository } from '@/types/repository';
 
 // Mock the Google Generative AI module
 vi.mock('@google/generative-ai', () => ({

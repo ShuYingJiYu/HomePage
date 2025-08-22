@@ -3,7 +3,7 @@
  * Central manager for all configuration-related operations
  */
 
-import type { SiteConfig, ConfigValidationResult } from '../types/config'
+import type { SiteConfig, ConfigValidationResult } from '@/types/config'
 import { ConfigLoader } from './config-loader'
 import { ConfigErrorHandler, createConfigError } from './config-error-handler'
 

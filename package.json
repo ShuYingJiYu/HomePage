@@ -9,10 +9,16 @@
     "build": "yarn seo:generate && tsc && vite build",
     "preview": "vite preview",
     "data:fetch": "tsx scripts/fetch-all-data.ts",
+    "data:fetch:cached": "tsx scripts/fetch-with-cache.ts",
     "data:fetch:wordpress": "tsx scripts/fetch-wordpress.ts",
     "data:fetch:status": "tsx scripts/fetch-status.ts",
     "data:analyze": "tsx scripts/ai-analysis.ts",
     "seo:generate": "tsx scripts/generate-seo.ts",
+    "cache:maintenance": "tsx scripts/cache-maintenance.ts maintenance",
+    "cache:warm": "tsx scripts/cache-maintenance.ts warm",
+    "cache:status": "tsx scripts/cache-maintenance.ts status",
+    "cache:demo": "tsx scripts/cache-demo.ts",
+    "cache:integration": "tsx scripts/fetch-with-cache.ts",
     "test": "vitest",
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
@@ -23,7 +29,8 @@
     "lint:fix": "eslint . --ext ts,tsx --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,js,jsx,json,css,md}\"",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "migrate:paths": "tsx scripts/migrate-path-aliases.ts"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

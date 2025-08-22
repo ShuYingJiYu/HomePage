@@ -3,7 +3,7 @@
  * Provides error handling, recovery strategies, and logging for configuration issues
  */
 
-import type { ErrorRecoveryStrategy } from '../types/config'
+import type { ErrorRecoveryStrategy } from '@/types/config'
 
 /**
  * Configuration error types

@@ -16,7 +16,7 @@ import type {
   GitHubProfile,
 } from '@/types/member'
 import { GitHubFetcher, GitHubRateLimitError } from './github-fetcher'
-import { githubConfig } from '../../config/github.config'
+import { githubConfig } from '@/config/github.config'
 
 /**
  * GitHub data processing result

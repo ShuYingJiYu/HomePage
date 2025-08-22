@@ -10,7 +10,7 @@ import {
   LanguageSchema,
   ProjectCategorySchema,
   ServiceCategorySchema
-} from '../../src/utils/validation';
+} from '@/utils/validation';
 
 describe('Validation Utils', () => {
   describe('Language Schema', () => {

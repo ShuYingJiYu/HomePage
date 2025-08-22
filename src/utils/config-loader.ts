@@ -9,7 +9,7 @@ import type {
   ConfigValidationResult,
   ConfigValidationError,
   ConfigLoaderOptions,
-} from '../types/config'
+} from '@/types/config'
 
 /**
  * Zod schemas for configuration validation

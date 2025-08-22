@@ -29,8 +29,10 @@
       "@/hooks/*": ["./src/hooks/*"],
       "@/utils/*": ["./src/utils/*"],
       "@/types/*": ["./src/types/*"],
+      "@/services/*": ["./src/services/*"],
       "@/data/*": ["./data/*"],
-      "@/config/*": ["./config/*"]
+      "@/config/*": ["./config/*"],
+      "@/scripts/*": ["./scripts/*"]
     }
   },
   "include": ["src", "config"],

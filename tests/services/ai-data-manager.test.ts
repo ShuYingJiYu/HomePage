@@ -3,9 +3,9 @@
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { AIDataManager } from '../../src/services/ai-data-manager';
-import type { Repository } from '../../src/types/repository';
-import type { RepositoryAnalysis, ReviewDecision } from '../../src/types/ai';
+import { AIDataManager } from '@/services/ai-data-manager';
+import type { Repository } from '@/types/repository';
+import type { RepositoryAnalysis, ReviewDecision } from '@/types/ai';
 
 // Mock the GeminiAnalyzer
 const mockAnalyzeRepository = vi.fn();

@@ -4,8 +4,8 @@
  */
 
 import { useState, useEffect, useCallback } from 'react'
-import type { SiteConfig, ConfigValidationResult } from '../types/config'
-import { getConfigManager } from '../utils/config-manager'
+import type { SiteConfig, ConfigValidationResult } from '@/types/config'
+import { getConfigManager } from '@/utils/config-manager'
 
 /**
  * Configuration hook state

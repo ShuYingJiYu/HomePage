@@ -3,7 +3,7 @@
  * Contains WordPress API settings and content management configuration
  */
 
-import type { WordPressConfig } from '../src/types/config';
+import type { WordPressConfig } from '@/types/config';
 
 export const wordpressConfig: WordPressConfig = {
   apiUrl: (typeof import.meta !== 'undefined' && import.meta.env?.VITE_WORDPRESS_API_URL) || process.env.VITE_WORDPRESS_API_URL || '',

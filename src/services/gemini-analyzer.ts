@@ -18,7 +18,7 @@ import type {
 } from '@/types/ai';
 import type { Repository } from '@/types/repository';
 import type { ProjectCategory, Language } from '@/types/common';
-import { aiConfig, aiModelConfig, qualityThresholds, fallbackContent } from '../../config/ai.config';
+import { aiConfig, aiModelConfig, qualityThresholds, fallbackContent } from '@/config/ai.config';
 
 export class GeminiAnalyzer implements AIAnalyzer, ContentGenerator {
   private genAI: GoogleGenerativeAI;

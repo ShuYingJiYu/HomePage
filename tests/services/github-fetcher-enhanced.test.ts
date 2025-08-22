@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { GitHubFetcher } from '../../src/services/github-fetcher';
+import { GitHubFetcher } from '@/services/github-fetcher';
 
 describe('Enhanced GitHub Fetcher', () => {
   let fetcher: GitHubFetcher;

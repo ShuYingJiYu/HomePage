@@ -3,7 +3,7 @@
  * Contains all the core settings for the Shuying Studio homepage
  */
 
-import type { SiteConfig } from '../src/types/config';
+import type { SiteConfig } from '@/types/config';
 
 export const siteConfig: SiteConfig = {
   site: {

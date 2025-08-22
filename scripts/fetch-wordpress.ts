@@ -9,8 +9,8 @@ import 'dotenv/config';
 import { existsSync, writeFileSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { WordPressDataManager } from '../src/services/wordpress-data-manager.js';
-import { WordPressFetcher } from '../src/services/wordpress-fetcher.js';
+import { WordPressDataManager } from '@/services/wordpress-data-manager.js';
+import { WordPressFetcher } from '@/services/wordpress-fetcher.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

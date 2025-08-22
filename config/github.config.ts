@@ -3,12 +3,12 @@
  * Contains GitHub API settings, rate limiting, and error handling strategies
  */
 
-import type { GitHubConfig } from '../src/types/config';
+import type { GitHubConfig } from '@/types/config';
 
 export const githubConfig: GitHubConfig = {
-  organization: import.meta.env.VITE_GITHUB_ORG || '',
-  personalAccount: import.meta.env.VITE_GITHUB_USER || '',
-  accessToken: import.meta.env.VITE_GITHUB_TOKEN || '',
+  organization: (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GITHUB_ORG) || process.env.VITE_GITHUB_ORG || '',
+  personalAccount: (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GITHUB_USER) || process.env.VITE_GITHUB_USER || '',
+  accessToken: (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GITHUB_TOKEN) || process.env.VITE_GITHUB_TOKEN || '',
   
   // Repositories to exclude from analysis and display
   excludeRepositories: [
@@ -78,7 +78,7 @@ export const githubEndpoints = {
 export const githubHeaders = {
   Accept: 'application/vnd.github.v3+json',
   'User-Agent': 'Shuying-Studio-Homepage/1.0',
-  Authorization: `token ${import.meta.env.VITE_GITHUB_TOKEN || ''}`
+  Authorization: `token ${(typeof import.meta !== 'undefined' && import.meta.env?.VITE_GITHUB_TOKEN) || process.env.VITE_GITHUB_TOKEN || ''}`
 };
 
 /**

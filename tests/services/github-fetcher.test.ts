@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect, beforeAll, beforeEach, vi } from 'vitest';
-import { GitHubFetcher, GitHubApiError, GitHubRateLimitError } from '../../src/services/github-fetcher';
+import { GitHubFetcher, GitHubApiError, GitHubRateLimitError } from '@/services/github-fetcher';
 // import type { Repository, GitHubProfile } from '../../src/types';
 
 // Mock environment variables for testing

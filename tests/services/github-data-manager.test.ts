@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect, beforeAll, beforeEach, vi } from 'vitest';
-import { GitHubDataManager } from '../../src/services/github-data-manager';
+import { GitHubDataManager } from '@/services/github-data-manager';
 // import type { Repository, GitHubProfile } from '../../src/types';
 
 // Mock environment variables for testing

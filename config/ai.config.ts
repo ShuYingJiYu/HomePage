@@ -4,7 +4,7 @@
  */
 
 import { config } from 'dotenv';
-import type { AIConfig } from '../src/types/config';
+import type { AIConfig } from '@/types/config';
 
 // Load environment variables from .env file
 config();

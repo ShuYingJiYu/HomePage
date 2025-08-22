@@ -5,7 +5,7 @@
 
 import { getConfigManager } from './config-manager'
 import { validateEnvironment } from './config-loader'
-import type { ConfigValidationResult } from '../types/config'
+import type { ConfigValidationResult } from '@/types/config'
 
 /**
  * Test configuration setup

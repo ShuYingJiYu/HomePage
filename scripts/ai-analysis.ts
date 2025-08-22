@@ -8,9 +8,9 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { AIDataManager } from '../src/services/ai-data-manager.js';
-import type { Repository } from '../src/types/repository.js';
-import type { RepositoryAnalysis } from '../src/types/ai.js';
+import { AIDataManager } from '@/services/ai-data-manager.js';
+import type { Repository } from '@/types/repository.js';
+import type { RepositoryAnalysis } from '@/types/ai.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

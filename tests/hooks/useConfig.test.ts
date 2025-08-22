@@ -5,7 +5,7 @@
 
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
-import { useConfig } from '../../src/hooks/useConfig';
+import { useConfig } from '@/hooks/useConfig';
 
 // Mock the config-manager module at the top level
 vi.mock('../../src/utils/config-manager', () => ({

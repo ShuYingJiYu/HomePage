@@ -26,7 +26,7 @@ import {
   githubConfig,
   githubEndpoints,
   githubHeaders,
-} from '../../config/github.config'
+} from '@/config/github.config'
 
 /**
  * GitHub API Error types
