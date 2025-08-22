@@ -27,20 +27,23 @@ export class GeminiAnalyzer implements AIAnalyzer, ContentGenerator {
   private lastRequestTime = 0;
 
   constructor() {
-    if (!aiConfig.geminiApiKey) {
-      throw new Error('Gemini API key is required. Please set VITE_GEMINI_API_KEY environment variable.');
+    if (aiConfig.geminiApiKey) {
+      console.log('✅ Initializing Gemini AI with API key...');
+      this.genAI = new GoogleGenerativeAI(aiConfig.geminiApiKey);
+      this.model = this.genAI.getGenerativeModel({ 
+        model: aiModelConfig.model,
+        generationConfig: {
+          temperature: aiModelConfig.temperature,
+          topP: aiModelConfig.topP,
+          topK: aiModelConfig.topK,
+          maxOutputTokens: aiModelConfig.maxTokens,
+        }
+      });
+    } else {
+      console.warn('⚠️  No Gemini API key provided. AI analyzer will use fallback strategies only.');
+      this.genAI = null as any;
+      this.model = null as any;
     }
-    
-    this.genAI = new GoogleGenerativeAI(aiConfig.geminiApiKey);
-    this.model = this.genAI.getGenerativeModel({ 
-      model: aiModelConfig.model,
-      generationConfig: {
-        temperature: aiModelConfig.temperature,
-        topP: aiModelConfig.topP,
-        topK: aiModelConfig.topK,
-        maxOutputTokens: aiModelConfig.maxTokens,
-      }
-    });
   }
 
   /**
@@ -70,6 +73,33 @@ export class GeminiAnalyzer implements AIAnalyzer, ContentGenerator {
   private async makeRequest<T>(prompt: string): Promise<AIResponse<T>> {
     const startTime = Date.now();
     
+    // If no API key or model, immediately return failure to trigger fallback
+    if (!this.model || !aiConfig.geminiApiKey) {
+      const processingTime = Date.now() - startTime;
+      
+      const aiError: AIError = {
+        code: 'no_api_key',
+        message: 'No Gemini API key configured',
+        type: 'invalid_request',
+        details: { reason: 'API key not provided' }
+      };
+
+      const metadata: AIResponseMetadata = {
+        model: 'fallback',
+        tokensUsed: 0,
+        processingTime,
+        requestId: `req_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        timestamp: new Date()
+      };
+
+      return {
+        data: null as unknown as T,
+        success: false,
+        error: aiError,
+        metadata
+      };
+    }
+    
     try {
       await this.checkRateLimit();
       
@@ -83,7 +113,7 @@ export class GeminiAnalyzer implements AIAnalyzer, ContentGenerator {
       let data: T;
       try {
         data = JSON.parse(text);
-      } catch {
+      } catch (parseError) {
         // If not JSON, return as string
         data = text as unknown as T;
       }

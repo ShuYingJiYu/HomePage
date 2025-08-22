@@ -3,10 +3,14 @@
  * Contains AI analysis settings, prompts, and error handling strategies
  */
 
+import { config } from 'dotenv';
 import type { AIConfig } from '../src/types/config';
 
+// Load environment variables from .env file
+config();
+
 export const aiConfig: AIConfig = {
-  geminiApiKey: import.meta.env.VITE_GEMINI_API_KEY || '',
+  geminiApiKey: process.env.VITE_GEMINI_API_KEY || (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GEMINI_API_KEY) || '',
   
   // AI analysis prompts for different tasks
   analysisPrompts: {
@@ -167,7 +171,7 @@ export const aiConfig: AIConfig = {
  * AI model configuration
  */
 export const aiModelConfig = {
-  model: 'gemini-pro',
+  model: 'models/gemini-1.5-flash', // Correct model name with models/ prefix
   temperature: 0.7, // Balance between creativity and consistency
   maxTokens: 2048,
   topP: 0.8,

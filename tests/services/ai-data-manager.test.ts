@@ -137,7 +137,7 @@ describe('AIDataManager', () => {
     });
 
     it('should use cache for repeated analysis', async () => {
-      mockAnalyzer.analyzeRepository.mockResolvedValue(mockAnalysis);
+      mockAnalyzeRepository.mockResolvedValue(mockAnalysis);
 
       const repositories = [mockRepository];
       
@@ -148,11 +148,11 @@ describe('AIDataManager', () => {
       const results2 = await manager.analyzeRepositories(repositories);
 
       expect(results1).toEqual(results2);
-      expect(mockAnalyzer.analyzeRepository).toHaveBeenCalledTimes(1);
+      expect(mockAnalyzeRepository).toHaveBeenCalledTimes(1);
     });
 
     it('should refresh cache when repository is updated', async () => {
-      mockAnalyzer.analyzeRepository.mockResolvedValue(mockAnalysis);
+      mockAnalyzeRepository.mockResolvedValue(mockAnalysis);
 
       const repositories = [mockRepository];
       
@@ -168,7 +168,7 @@ describe('AIDataManager', () => {
       // Second analysis with updated repo
       await manager.analyzeRepositories([updatedRepo]);
 
-      expect(mockAnalyzer.analyzeRepository).toHaveBeenCalledTimes(2);
+      expect(mockAnalyzeRepository).toHaveBeenCalledTimes(2);
     });
   });
 
@@ -265,7 +265,7 @@ describe('AIDataManager', () => {
 
   describe('fallback strategies', () => {
     it('should infer basic category correctly', async () => {
-      mockAnalyzer.analyzeRepository.mockRejectedValue(new Error('AI Error'));
+      mockAnalyzeRepository.mockRejectedValue(new Error('AI Error'));
 
       const webRepo = { ...mockRepository, language: 'JavaScript', topics: ['react'] };
       const mobileRepo = { ...mockRepository, language: 'Swift', topics: ['ios'] };
@@ -283,7 +283,7 @@ describe('AIDataManager', () => {
     });
 
     it('should extract basic tech stack', async () => {
-      mockAnalyzer.analyzeRepository.mockRejectedValue(new Error('AI Error'));
+      mockAnalyzeRepository.mockRejectedValue(new Error('AI Error'));
 
       const repo = {
         ...mockRepository,
@@ -303,7 +303,7 @@ describe('AIDataManager', () => {
     });
 
     it('should calculate basic score based on repository metrics', async () => {
-      mockAnalyzer.analyzeRepository.mockRejectedValue(new Error('AI Error'));
+      mockAnalyzeRepository.mockRejectedValue(new Error('AI Error'));
 
       const highQualityRepo = {
         ...mockRepository,
@@ -323,7 +323,7 @@ describe('AIDataManager', () => {
 
   describe('cache management', () => {
     it('should clear expired cache entries', async () => {
-      mockAnalyzer.analyzeRepository.mockResolvedValue(mockAnalysis);
+      mockAnalyzeRepository.mockResolvedValue(mockAnalysis);
 
       // Analyze repository to populate cache
       await manager.analyzeRepositories([mockRepository]);
@@ -383,7 +383,7 @@ describe('AIDataManager', () => {
 
   describe('error handling and resilience', () => {
     it('should handle multiple analysis failures gracefully', async () => {
-      mockAnalyzer.analyzeRepository
+      mockAnalyzeRepository
         .mockRejectedValueOnce(new Error('Network error'))
         .mockRejectedValueOnce(new Error('Rate limit'))
         .mockRejectedValueOnce(new Error('Invalid response'));
@@ -404,7 +404,7 @@ describe('AIDataManager', () => {
     });
 
     it('should provide meaningful fallback content', async () => {
-      mockAnalyzer.analyzeRepository.mockRejectedValue(new Error('AI Service Down'));
+      mockAnalyzeRepository.mockRejectedValue(new Error('AI Service Down'));
 
       const repo = {
         ...mockRepository,
